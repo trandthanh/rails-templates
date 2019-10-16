@@ -204,7 +204,7 @@ after_bundle do
     import "bootstrap";
   JS
 
-  inject_into_file 'config/webpack/environment.js', before: 'module.exports' do <<-'JS'
+  inject_into_file 'config/webpack/environment.js', before: 'module.exports' do <<-JS
     const webpack = require('webpack')
     // Preventing Babel from transpiling NodeModules packages
     environment.loaders.delete('nodeModules');
@@ -215,7 +215,8 @@ after_bundle do
         jQuery: 'jquery',
         Popper: ['popper.js', 'default']
       })
-    ) 'JS'
+    )
+  JS
   end
 
   # DOTENV
