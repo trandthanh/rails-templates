@@ -7,7 +7,7 @@ file 'Gemfile', <<-RUBY
   source 'https://rubygems.org'
   ruby '#{RUBY_VERSION}'
 
-  # #{"gem 'bootsnap', require: false" if Rails.version >= "5.2"} => not necessary since rails > 5.2
+  #{"gem 'bootsnap', require: false" if Rails.version >= "5.2"} => not necessary since rails > 5.2
   gem 'jbuilder', '~> 2.0'
   gem 'pg', '~> 0.21'
   gem 'puma'
@@ -219,18 +219,16 @@ after_bundle do
   JS
   end
 
-  # DOTENV
   run 'touch .env'
 
+
+  run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/.rubocop.yml > .rubocop.yml'
+
+  git :init
+  git add: '.'
+  git commit: "-m 'Initial commit with devise template from https://github.com/lewagon/rails-templates'"
 end
 
-# RUBOCOP
-run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/.rubocop.yml > .rubocop.yml'
-
-# GIT
-git :init
-git add: '.'
-git commit: "-m 'Initial commit with devise template and RailsAdmin'"
 
 
 
