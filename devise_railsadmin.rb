@@ -38,19 +38,19 @@ file '.ruby-version', RUBY_VERSION
 
 # Procfile
 ########################################
-file 'Procfile', <<-YAML
-web: bundle exec puma -C config/puma.rb
-YAML
+# file 'Procfile', <<-YAML
+# web: bundle exec puma -C config/puma.rb
+# YAML
 
 # Clevercloud conf file
 ########################################
-file 'clevercloud/ruby.json', <<-EOF
-{
-  "deploy": {
-    "rakegoals": ["assets:precompile", "db:migrate"]
-  }
-}
-EOF
+# file 'clevercloud/ruby.json', <<-EOF
+# {
+#   "deploy": {
+#     "rakegoals": ["assets:precompile", "db:migrate"]
+#   }
+# }
+# EOF
 
 # Database conf file
 ########################################
@@ -79,6 +79,8 @@ run 'rm -rf app/assets/stylesheets'
 run 'rm -rf vendor'
 run 'curl -L https://github.com/lewagon/stylesheets/archive/master.zip > stylesheets.zip'
 run 'unzip stylesheets.zip -d app/assets && rm stylesheets.zip && mv app/assets/rails-stylesheets-master app/assets/stylesheets'
+run 'rm app/assets/stylesheets/components/_avatar.scss'
+run 'rm app/assets/stylesheets/components/_navbar.scss'
 
 run 'rm app/assets/javascripts/application.js'
 file 'app/assets/javascripts/application.js', <<-JS
@@ -106,7 +108,6 @@ file 'app/views/layouts/application.html.erb', <<-HTML
     <%#= stylesheet_pack_tag 'application', media: 'all' %> <!-- Uncomment if you import CSS in app/javascript/packs/application.js -->
   </head>
   <body>
-    <%= render 'shared/navbar' %>
     <%= render 'shared/flashes' %>
     <%= yield %>
     <%= javascript_include_tag 'application' %>
@@ -134,27 +135,24 @@ file 'app/views/shared/_flashes.html.erb', <<-HTML
 <% end %>
 HTML
 
-run 'curl -L https://raw.githubusercontent.com/lewagon/awesome-navbars/master/templates/_navbar_wagon.html.erb > app/views/shared/_navbar.html.erb'
-run 'curl -L https://raw.githubusercontent.com/lewagon/rails-templates/master/logo.png > app/assets/images/logo.png'
-
 # README
 ########################################
 markdown_file_content = <<-MARKDOWN
-Rails app generated with [lewagon/rails-templates](https://github.com/lewagon/rails-templates), created by the [Le Wagon coding bootcamp](https://www.lewagon.com) team.
+Rails app generated based on the awesome [lewagon/rails-templates](https://github.com/lewagon/rails-templates) ([Le Wagon coding bootcamp](https://www.lewagon.com)).
 MARKDOWN
 file 'README.md', markdown_file_content, force: true
 
 # Generators
 ########################################
-generators = <<-RUBY
-config.generators do |generate|
-      generate.assets false
-      generate.helper false
-      generate.test_framework :test_unit, fixture: false
-    end
-RUBY
+# generators = <<-RUBY
+# config.generators do |generate|
+#       generate.assets false
+#       generate.helper false
+#       generate.test_framework :test_unit, fixture: false
+#     end
+# RUBY
 
-environment generators
+# environment generators
 
 ########################################
 # AFTER BUNDLE
