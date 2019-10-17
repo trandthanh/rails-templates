@@ -17,7 +17,11 @@ gem 'sassc-rails'
 gem 'simple_form'
 gem 'uglifier'
 gem 'webpacker'
+
 gem 'devise'
+
+gem 'remotipart', github: 'mshibuya/remotipart'
+gem 'rails_admin', '>= 1.0.0.rc'
 
 group :development do
   gem 'web-console', '>= 3.3.0'
@@ -155,10 +159,12 @@ after_bundle do
   # Generators: db + simple form + pages controller
   rails_command 'db:drop db:create db:migrate'
   generate('simple_form:install', '--bootstrap')
-  generate(:controller, 'pages', 'home', '--skip-routes', '--no-test-framework')
+  generate(:controller, 'pages', 'home', 'about', 'contact', '--skip-routes', '--no-test-framework')
 
   # Routes
   route "root to: 'pages#home'"
+  route "get 'pages/about'"
+  route "get 'pages/contact'"
 
   # Git ignore
   append_file '.gitignore', <<-TXT
@@ -195,6 +201,22 @@ class PagesController < ApplicationController
   end
 end
   RUBY
+
+  # RAILS ADMIN
+  generate('migration AddAdminToUsers')
+
+  append_file '/.*_add_admin_to_users.rb/', <<-RUBY
+class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version.first(3)}]
+  def change
+    add_column :users, :admin, :boolean, null: false, default: false
+  end
+end
+  RUBY
+  rails_command 'db:migrate'
+
+  generate('rails_admin:install')
+  # RAILS ADMIN
+
 
   # Environments
   environment 'config.action_mailer.default_url_options = { host: "http://localhost:3000" }', env: 'development'
