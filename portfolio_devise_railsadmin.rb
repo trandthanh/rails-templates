@@ -207,7 +207,7 @@ end
 
   file_name = Dir.glob("db/migrate/*_add_admin_to_users.rb").first
 
-  append_file '#{file_name}', <<-RUBY
+  append_file "#{file_name}", <<-RUBY
 class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version[0..2]}]
   def change
     add_column :users, :admin, :boolean, null: false, default: false
