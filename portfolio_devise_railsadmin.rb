@@ -206,7 +206,7 @@ end
   generate('migration AddAdminToUsers')
 
   append_file '/.*_add_admin_to_users.rb/', <<-RUBY
-class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version.first(3)}]
+class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version[0..2]}]
   def change
     add_column :users, :admin, :boolean, null: false, default: false
   end
