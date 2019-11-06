@@ -202,28 +202,28 @@ class PagesController < ApplicationController
 end
   RUBY
 
-  # RAILS ADMIN
-  generate('migration AddAdminToUsers')
+#   # RAILS ADMIN
+#   generate('migration AddAdminToUsers')
 
-  file_name = Dir.glob("db/migrate/*_add_admin_to_users.rb").first
+#   file_name = Dir.glob("db/migrate/*_add_admin_to_users.rb").first
 
-  append_file "#{file_name}", <<-RUBY
-class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version[0..2]}]
-  def change
-    add_column :users, :admin, :boolean, null: false, default: false
-  end
-end
-  RUBY
-  rails_command 'db:migrate'
+#   append_file "#{file_name}", <<-RUBY
+# class AddAdminToUsers < ActiveRecord::Migration[#{Rails.version[0..2]}]
+#   def change
+#     add_column :users, :admin, :boolean, null: false, default: false
+#   end
+# end
+#   RUBY
+#   rails_command 'db:migrate'
 
-  generate('rails_admin:install')
+#   generate('rails_admin:install')
 
-  run 'rm config/initializers/rails_admin.rb'
-  file 'config/initializers/rails_admin.rb', <<-RUBY
-RailsAdmin.config do |config|
-  config.authorize_with do |controller|
-    redirect_to main_app.root_path unless current_user && current_user.admin
-  end
+#   run 'rm config/initializers/rails_admin.rb'
+#   file 'config/initializers/rails_admin.rb', <<-RUBY
+# RailsAdmin.config do |config|
+#   config.authorize_with do |controller|
+#     redirect_to main_app.root_path unless current_user && current_user.admin
+#   end
 
   ### Popular gems integration
 
@@ -248,23 +248,23 @@ RailsAdmin.config do |config|
   ## To disable Gravatar integration in Navigation Bar set to false
   # config.show_gravatar = true
 
-  config.actions do
-    dashboard                     # mandatory
-    index                         # mandatory
-    new
-    export
-    bulk_delete
-    show
-    edit
-    delete
-    show_in_app
+#   config.actions do
+#     dashboard                     # mandatory
+#     index                         # mandatory
+#     new
+#     export
+#     bulk_delete
+#     show
+#     edit
+#     delete
+#     show_in_app
 
-    ## With an audit adapter, you can add:
-    # history_index
-    # history_show
-  end
-end
-  RUBY
+#     ## With an audit adapter, you can add:
+#     # history_index
+#     # history_show
+#   end
+# end
+#   RUBY
   # RAILS ADMIN
 
 
