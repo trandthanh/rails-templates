@@ -159,7 +159,7 @@ after_bundle do
   # generate(:controller, 'pages', 'home', 'about', 'contact', '--skip-routes', '--no-test-framework')
 
   # Routes
-  # route "root to: 'pages#home'"
+  route "root to: 'pages#home'"
   # route "get 'pages/about'"
   # route "get 'pages/contact'"
 
